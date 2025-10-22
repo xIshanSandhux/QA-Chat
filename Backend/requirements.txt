@@ -1,0 +1,7 @@
+# backend requirements
+google-genai
+python-dotenv
+uvicorn
+fastapi
+# pydantic is not really needed if installed fastapi as fastapi installs it for you
+pydantic

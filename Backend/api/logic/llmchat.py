@@ -10,6 +10,7 @@ GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 
 class userQuery(BaseModel):
     currentQuery: str
+    sessionId: str = None
 
 # example of full chat
 fullChat = [{"role": "user", "parts": [{"text": "Explain how AI works in a few words"}]}, 

@@ -25,21 +25,3 @@ async def set_redis(session_id: str, query: str):
    
 
 
-
-
-# redis_client.set('foo', 'bar')
-# # True
-# print(redis_client.get('foo'))
-# # bar
-
-# r.hset('user-session:123', mapping={
-#     'name': 'John',
-#     "surname": 'Smith',
-#     "company": 'Redis',
-#     "age": 29
-# })  
-# # True
-
-# r.hgetall('user-session:123')
-# # {'surname': 'Smith', 'name': 'John', 'company': 'Redis', 'age': '29'}
-

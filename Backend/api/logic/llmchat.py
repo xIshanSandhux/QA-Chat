@@ -1,44 +1,22 @@
 from google import genai
 from dotenv import load_dotenv
 import os
+from api.redis.chatupdates import addToChat, getChatHistory
+
 # fetching API KEY from env
 load_dotenv()
 GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 
-
-# example of full chat
-# fullChatexample = [
-#     {"role": "user", "parts": [{"text": "Explain how AI works in a few words"}]}, 
-# {"role": "model", "parts": [{"text": "AI is a technology that allows machines to learn and make decisions based on data."}]},
-# ]
-
-fullChat = []
-
 client = genai.Client(api_key=GOOGLE_API_KEY)
 
-# adding to chat history
-# role: user or model
-# text: the text to add to the chat history
-# will be changed when redis is implemented 
-# will be changed to return the format to be stored in redis?
-def addToChat(role, text):
-    fullChat.append({"role": role, "parts": [{"text": text}]})
-
-# getting chat history
-# will be changed when redis is implemented 
-# will be changed to get the chat from redis and then return the full chat history in a list
-def getChatHistory():
-    return fullChat
-
-async def generateResponse(query: str):
+async def generateResponse(session_id, query: str):
     
-    addToChat("user", query)
-    chatfull = getChatHistory()
-    print(chatfull)
+    await addToChat(session_id, "user", query)
+    chat_history = await getChatHistory(session_id)
     print("Generating response...")
     response = client.models.generate_content(
-        model="gemini-2.5-flash", contents=chatfull
+        model="gemini-2.5-flash", contents=chat_history
     )
-    addToChat("model", response.text)
-    print(getChatHistory())
+    await addToChat(session_id, "model", response.text)
+    print(await getChatHistory(session_id))
     return response.text

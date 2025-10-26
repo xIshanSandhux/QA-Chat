@@ -1,6 +1,6 @@
 import redis 
 from fastapi import HTTPException
-
+import json
 chat_redis = None
 
 async def start_redis():
@@ -13,6 +13,15 @@ async def start_redis():
 async def shutdown_redis():
     global chat_redis
     chat_redis.close()
+    print("Redis shut down successfully")
+
+async def get_redis(session_id: str):
+    global chat_redis
+    return chat_redis.get(session_id)
+
+async def set_redis(session_id: str, query: str):
+    global chat_redis
+    chat_redis.set(session_id, query)
    
 
 

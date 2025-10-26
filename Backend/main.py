@@ -2,12 +2,15 @@ from fastapi import FastAPI
 import redis
 from api.Routes.idroutes import router as idroute
 from api.Routes.chatroute import router as chatroute
-from api.redis_chat.initialization import start_redis, shutdown_redis
+from api.redis.initialization import start_redis, shutdown_redis
+from contextlib import asynccontextmanager
 
+@asynccontextmanager
 async def lifespan(app: FastAPI):
     # redis for the chat history
     await start_redis()
     yield
+    
     await shutdown_redis()
 
 app = FastAPI(title="QA Chat API", lifespan=lifespan)

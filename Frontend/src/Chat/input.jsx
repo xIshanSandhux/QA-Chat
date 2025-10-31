@@ -1,9 +1,33 @@
+import { useState } from 'react'
+import './input.css'
+import { IoIosSend } from "react-icons/io";
+
+
 export default function ChatInput(){
+    const [query, setQuery] = useState("")
+
     return (
         <div className="chat-input">
-            <h1>Chat Input</h1>
-            <input type="text" placeholder="Type your message here..." />
-            <button onClick={() => onSend({message: "Sending message..."})}>Send</button>
+            <form 
+            className="chat-input-form"
+            >
+                
+            <textarea 
+            className="chat-input-textarea" 
+            type="text" 
+            placeholder="Type your message here..." 
+            onChange = {e => setQuery(e.target.value)} 
+            value={query}
+            />
+            <button 
+            className="chat-input-button" 
+            type="submit"
+            onClick={() => onSend({message: query})}
+            disabled={!query.trim()}
+            >
+                <IoIosSend size={30} color="#ffffff"/>
+            </button>
+            </form>
     </div>
   );
 }

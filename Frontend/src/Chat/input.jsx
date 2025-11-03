@@ -2,10 +2,11 @@ import { useState } from 'react'
 import './input.css'
 import { IoIosSend } from "react-icons/io";
 import axios from 'axios';
+import Cookies from 'js-cookie';
 
 export default function ChatInput(){
     const [query, setQuery] = useState("")
-
+    const sessionId = Cookies.get('sessionId');
     return (
         <div className="chat-input">
             <form
@@ -13,7 +14,7 @@ export default function ChatInput(){
             className="chat-input-form"
             onSubmit = {(e)=>{
                 e.preventDefault();
-                onSend({message: query});
+                onSend({message: query, sesId: sessionId});
                 setQuery('');
             }}
             >
@@ -44,7 +45,7 @@ async function onSend(props){
     try {
         const queryRes = await axios.post('http://127.0.0.1:8000/chatResponse', {
             currentQuery: props.message,
-            sessionId: 'test-session-id'
+            sessionId: props.sesId
         });
         alert(queryRes.data.chatResponse);
     }

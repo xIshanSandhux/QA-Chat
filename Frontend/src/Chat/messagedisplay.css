@@ -1,0 +1,31 @@
+.message-container {
+  display: flex;
+  align-items: flex-start;
+  height: auto;
+  /* padding: 1rem 0.5rem; */
+  border-radius: 10rem;
+  /* background-color: rgb(0, 0, 0); */
+  margin-bottom: 0.2rem;
+  box-shadow: 0 2px 5px rebeccapurple;
+  resize: vertical;
+}
+
+.user-container{
+    background-color: beige;
+    width: 100%;
+    color: black;
+    border-radius: 10rem;
+    padding: 0.4rem;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+}
+
+.assistant-container{
+    background-color: rgb(0, 0, 0);
+    width: 100%;
+    color: rgb(255, 255, 255);
+    border-radius: 10rem;
+    padding: 0.4rem;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+}

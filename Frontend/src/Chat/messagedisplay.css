@@ -1,35 +1,28 @@
 .message-container {
   display: flex;
-  /* align-items: flex-start; */
   text-align: left;
-  width: 900px;
+  width: 990px;
   height: fit-content;
-  /* padding: 1rem 0.5rem; */
+  padding: 0.5rem 0.5rem;
   border-radius: 1.5rem;
-  /* background-color: rgb(0, 0, 0); */
-  margin-bottom: 0.2rem;
+  margin-bottom: 0.8rem;
   box-shadow: 0 2px 5px rebeccapurple;
-  /* resize: vertical; */
 }
 
-.user-container{
-    background-color: beige;
-    width: 100%;
-    color: black;
-    border-radius: 10rem;
-    padding: 0.4rem;
-    /* word-wrap: break-word; */
-    /* white-space: pre-wrap; */
-}
-
-.assistant-container{
+.text-container{
     background-color: rgb(0, 0, 0);
     width: 100%;
     height: fit-content;
-    align-items: flex-start;
+    display: flex;
+    align-items: center;
     color: rgb(255, 255, 255);
     border-radius: 1.5rem;
     padding: 0.4rem;
-    overflow-wrap: break-word;
     word-break: break-all;
+    flex-direction: row;
+    gap: 0.5rem;
+  }
+
+  .text-icon{
+    flex-shrink:0;
 }

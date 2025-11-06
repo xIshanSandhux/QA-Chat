@@ -1,4 +1,7 @@
 import './messagedisplay.css'
+// import assistant from './assistant.png'
+import { TbMessageChatbot } from "react-icons/tb";
+import { FaRegUserCircle } from "react-icons/fa";
 export default function MessageDisplay(){
 
     const messageTemp = [
@@ -11,17 +14,24 @@ export default function MessageDisplay(){
     return (
         <div>
             {messageTemp.map(({role,message},index)=>(
-                <div className="message-container">
+                <div key={index} className="message-container">
                    {
 
                   ( role==="user")
                     ?
-                    <div className='user-container'>{"User: " + message}</div>
-                : <div className='assistant-container'>{"Assitant: "+ message}</div>
+                    <div className='text-container'>
+                        <div className='text-icon'>
+                            <FaRegUserCircle size={30} color="white" />
+                        </div>
+                        {message}</div>
+                : <div className='text-container'>
+                    <div className='text-icon'>
+                        <TbMessageChatbot size={31} color="white" />
+                    </div>
+                    {message}
+                    </div>
                    }
                 </div>
-                
-                
             ))}
         </div>
     );

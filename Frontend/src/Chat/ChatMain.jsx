@@ -1,10 +1,13 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
-
+import ChatInput from './input';
+import MessageDisplay from './messageDisplay';
 
 let ran = false;
 export default function ChatMain(){
+
+  const [messages, setMessages] = useState([]);
 
     useEffect(()=>{
     let sessionId;
@@ -21,6 +24,18 @@ export default function ChatMain(){
       fetchSessionId();
     }
   }, []);
+
+  return (
+    <>
+    <MessageDisplay
+    messages={messages}
+    />
+    <ChatInput
+    setMessage={setMessages}
+    allMessages={messages}
+    />
+    </>
+  )
 }
 
 async function getSessionId(){

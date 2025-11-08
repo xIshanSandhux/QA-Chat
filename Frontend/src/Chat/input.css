@@ -3,6 +3,7 @@
     width: 850px;
     background-color: #000000;
     border: 1px solid #000000;
+    box-shadow: 0 2px 5px rebeccapurple;
     border-radius: 100px;
     padding-right:0;
     position: fixed;

@@ -4,7 +4,7 @@ import { IoIosSend } from "react-icons/io";
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
-export default function ChatInput(){
+export default function ChatInput({setMessage, allMessages}){
     const [query, setQuery] = useState("")
     const sessionId = Cookies.get('sessionId');
     return (
@@ -14,7 +14,9 @@ export default function ChatInput(){
             className="chat-input-form"
             onSubmit = {(e)=>{
                 e.preventDefault();
-                onSend({message: query, sesId: sessionId});
+                const newMessages = [...allMessages, {role: 'user', message: query}];
+                setMessage(newMessages);
+                onSend({message: query, sesId: sessionId, messages: newMessages, setMessage: setMessage});
                 setQuery('');
             }}
             >
@@ -30,7 +32,6 @@ export default function ChatInput(){
             <button 
             className="chat-input-button" 
             type="submit"
-            // onClick={() => onSend({message: query})}
             disabled={!query.trim()}
             >
                 <IoIosSend size={30} color="#ffffff"/>
@@ -47,7 +48,7 @@ async function onSend(props){
             currentQuery: props.message,
             sessionId: props.sesId
         });
-        alert(queryRes.data.chatResponse);
+        props.setMessage([...props.messages, {role: 'assistant', message: queryRes.data.chatResponse}]);
     }
     catch(error){
         console.error('Error:', error);

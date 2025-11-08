@@ -1,12 +1,11 @@
 import './App.css'
-import ChatInput from './Chat/input'
 import ChatMain from './Chat/ChatMain'
-import MessageDisplay from './Chat/messageDisplay'
-
+import UploadButton from './fileUpload/uploadButton'
 function App() {
 
   return (
     <>
+    <UploadButton />
       <ChatMain />
     </>
   )

@@ -10,11 +10,16 @@ export default function MessageDisplay({messages}){
         chatRef.current.scrollTop = chatRef.current.scrollHeight;
     }
    }, [messages]);
-   
+
     return (
         <div className='chat' ref={chatRef}>
             {messages.map(({role,message},index)=>(
-                <div key={index} className="message-container">
+                <div 
+                key={index} 
+                className="message-container" 
+                style={
+                    (role!=='user') ? {boxShadow: 'none'} : {boxShadow: '0 7px 5px rebeccapurple'}}
+                    >
                    {( role==="user")?
                    <div className='text-container'>
                     <div className='text-icon'>

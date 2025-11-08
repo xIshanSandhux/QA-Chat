@@ -1,10 +1,18 @@
 import './messagedisplay.css'
 import { TbMessageChatbot } from "react-icons/tb";
 import { FaRegUserCircle } from "react-icons/fa";
+import {useEffect, useRef} from 'react';
 export default function MessageDisplay({messages}){
+   const chatRef = useRef(null);
 
+   useEffect(()=>{
+    if(chatRef.current){
+        chatRef.current.scrollTop = chatRef.current.scrollHeight;
+    }
+   }, [messages]);
+   
     return (
-        <div className='chat'>
+        <div className='chat' ref={chatRef}>
             {messages.map(({role,message},index)=>(
                 <div key={index} className="message-container">
                    {( role==="user")?

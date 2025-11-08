@@ -4,7 +4,7 @@ import { FaRegUserCircle } from "react-icons/fa";
 export default function MessageDisplay({messages}){
 
     return (
-        <div>
+        <div className='chat'>
             {messages.map(({role,message},index)=>(
                 <div key={index} className="message-container">
                    {( role==="user")?

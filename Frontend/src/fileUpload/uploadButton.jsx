@@ -39,11 +39,12 @@ export default function UploadButton(){
 }
 
 async function pdfUpload(formData){
+    let response;
     try{
-        let response = await axios.post('http://127.0.0.1:8000/pdfUpload', formData);
+        response = await axios.post('http://127.0.0.1:8000/pdfUpload', formData);
         console.log(response.data);
     }catch(error){
         console.error('Error uploading PDF:', error);
     }
-    return response.data;
+    return response.data.message;
 }

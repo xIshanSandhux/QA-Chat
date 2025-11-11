@@ -6,3 +6,4 @@ fastapi
 # pydantic is not really needed if installed fastapi as fastapi installs it for you
 pydantic
 redis[hiredis]
+python-multipart

@@ -3,11 +3,13 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import ChatInput from './input';
 import MessageDisplay from './messageDisplay';
+import Search from '../webSearch/search';
 
 let ran = false;
 export default function ChatMain(){
 
   const [messages, setMessages] = useState([]);
+  const [webSearch, setWebSearch] = useState(false);
 
     useEffect(()=>{
     let sessionId;
@@ -27,12 +29,14 @@ export default function ChatMain(){
 
   return (
     <>
+    <Search webSearch={webSearch} setWebSearch={setWebSearch}/>
     <MessageDisplay
     messages={messages}
     />
     <ChatInput
     setMessage={setMessages}
     allMessages={messages}
+    webSearch={webSearch}
     />
     </>
   )

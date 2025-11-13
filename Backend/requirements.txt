@@ -7,3 +7,4 @@ fastapi
 pydantic
 redis[hiredis]
 python-multipart
+ddgs

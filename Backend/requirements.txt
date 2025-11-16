@@ -8,3 +8,4 @@ pydantic
 redis[hiredis]
 python-multipart
 ddgs
+aiohttp[speedups]

@@ -1,7 +1,10 @@
 from io import BytesIO
 import pymupdf4llm as pdf
 import pymupdf
-
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).parent.parent))
+from embedding.embed import embedDoc
 
 sample_pdf_10_lines = b"""%PDF-1.4
 1 0 obj
@@ -48,7 +51,20 @@ startxref
 
 fileObj = BytesIO(sample_pdf_10_lines)
 
-doc = pymupdf.open(stream=fileObj)
-
+doc = pymupdf.open('CoverLetter.pdf')
 md = pdf.to_markdown(doc)
+# md = pdf.to_markdown(doc)
 print(md)
+print(type(md))
+print(len(md))
+chunks = [md[i:i+2000] for i in range(0, len(md), 2000)]
+embeddings = embedDoc(chunks)
+print(len(embeddings))
+print(type(embeddings))
+# print(len(chunks))
+# print(chunks)
+
+
+
+
+    

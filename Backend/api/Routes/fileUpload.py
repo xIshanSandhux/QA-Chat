@@ -12,5 +12,6 @@ async def pdfUpload(pdfFile: UploadFile):
     fileObj = io.BytesIO(file_content)
     doc = pymupdf.open(stream=fileObj)
     md = pymupdf4llm.to_markdown(doc)
+    print(type(md))
     print(md)
     return {"message": "PDF uploaded successfully"}

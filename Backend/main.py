@@ -4,6 +4,7 @@ from api.Routes.idroutes import router as idroute
 from api.Routes.chatroute import router as chatroute
 from api.Routes.fileUpload import router as fileUpload
 from api.redis.initialization import start_redis, shutdown_redis
+from vectorDB.chromaDB.startup import start_chromadb
 from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 
@@ -11,6 +12,7 @@ from contextlib import asynccontextmanager
 async def lifespan(app: FastAPI):
     # redis for the chat history
     await start_redis()
+    await start_chromadb()
     yield
     
     await shutdown_redis()

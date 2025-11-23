@@ -10,3 +10,4 @@ python-multipart
 ddgs
 aiohttp[speedups]
 sentence-transformers
+chromadb

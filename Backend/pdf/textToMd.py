@@ -60,6 +60,7 @@ print(len(md))
 chunks = [md[i:i+2000] for i in range(0, len(md), 2000)]
 embeddings = embedDoc(chunks)
 print(len(embeddings))
+print(embeddings)
 print(type(embeddings))
 # print(len(chunks))
 # print(chunks)

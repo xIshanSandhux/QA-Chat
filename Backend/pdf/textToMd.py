@@ -51,20 +51,29 @@ startxref
 
 fileObj = BytesIO(sample_pdf_10_lines)
 
-doc = pymupdf.open('CoverLetter.pdf')
-md = pdf.to_markdown(doc)
+# doc = pymupdf.open('CoverLetter.pdf')
 # md = pdf.to_markdown(doc)
-print(md)
-print(type(md))
-print(len(md))
-chunks = [md[i:i+2000] for i in range(0, len(md), 2000)]
-embeddings = embedDoc(chunks)
-print(len(embeddings))
-print(embeddings)
-print(type(embeddings))
+# # md = pdf.to_markdown(doc)
+# print(md)
+# print(type(md))
+# print(len(md))
+# # chunks = [md[i:i+2000] for i in range(0, len(md), 2000)]
+# embeddings = embedDoc(chunks)
+# print(len(embeddings))
+# print(embeddings)
+# print(type(embeddings))
 # print(len(chunks))
 # print(chunks)
 
+def readDoc(file: bytes):
+    fileObj = BytesIO(file)
+    doc = pymupdf.open(stream=fileObj)
+    md = pdf.to_markdown(doc)
+    return md
+
+def create_chunks(doc: str):
+    chunks = [doc[i:i+2000] for i in range(0, len(doc), 2000)]
+    return chunks
 
 
 

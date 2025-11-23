@@ -3,7 +3,7 @@
 from sentence_transformers import SentenceTransformer
 from typing import List
 
-def embedDoc(chunks: List[str]):
+async def embedDoc(chunks: List[str]):
     model = SentenceTransformer('BAAI/bge-base-en-v1.5')
     embeddings = model.encode(chunks)
     return embeddings

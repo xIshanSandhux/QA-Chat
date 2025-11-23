@@ -15,7 +15,7 @@ async def generateResponse(session_id, query: str):
     chat_history = await getChatHistory(session_id)
     print("Generating response...")
     response = client.models.generate_content(
-        model="gemma-3-27b-it", contents=chat_history
+        model="gemini-2.5-flash", contents=chat_history
     )
     await addToChat(session_id, "model", response.text)
     print(await getChatHistory(session_id))

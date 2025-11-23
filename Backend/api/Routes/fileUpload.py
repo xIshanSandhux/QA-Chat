@@ -13,6 +13,7 @@ router = APIRouter()
 @router.post("/pdfUpload", status_code=status.HTTP_201_CREATED)
 async def pdfUpload(pdfFile: Annotated[UploadFile, File()],sessionId: Annotated[str, Form()]):
     print(f"Filename: {pdfFile.filename} || Content Type: {pdfFile.content_type}")
+    print("Session ID from file upload: ", sessionId)
     file_content = await pdfFile.read()
     # doc = 
     md = readDoc(file_content)

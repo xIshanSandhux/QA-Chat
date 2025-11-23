@@ -1,11 +1,11 @@
 import './App.css'
 import ChatMain from './Chat/ChatMain'
-import UploadButton from './fileUpload/uploadButton'
+// import UploadButton from './fileUpload/uploadButton'
 function App() {
 
   return (
     <>
-    <UploadButton />
+    {/* <UploadButton /> */}
       <ChatMain />
     </>
   )

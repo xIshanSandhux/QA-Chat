@@ -1,12 +1,12 @@
 import { useRef, useEffect } from 'react';
 import './uploadFile.css';
 import axios from 'axios';
-import Cookies from 'js-cookie';
+// import Cookies from 'js-cookie';
 
-export default function UploadButton(){
+export default function UploadButton({sessionId}){
     const fileInputRef = useRef(null);
-    const sessionId = Cookies.get('sessionId');
-    console.log(sessionId);
+    // const sessionId = Cookies.get('sessionId');
+    // console.log(sessionId);
     console.log('sessionId', sessionId);
     // useEffect(()=>{
     const handleFileUpload = async (e) => {

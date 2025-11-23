@@ -4,7 +4,7 @@ import { IoIosSend } from "react-icons/io";
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
-export default function ChatInput({setMessage, allMessages, webSearch}){
+export default function ChatInput({setMessage, allMessages, rag}){
     const [query, setQuery] = useState("")
     const sessionId = Cookies.get('sessionId');
     
@@ -17,7 +17,7 @@ export default function ChatInput({setMessage, allMessages, webSearch}){
                 e.preventDefault();
                 const newMessages = [...allMessages, {role: 'user', message: query}];
                 setMessage(newMessages);
-                onSend({message: query, sesId: sessionId, messages: newMessages, setMessage: setMessage, search: webSearch});
+                onSend({message: query, sesId: sessionId, messages: newMessages, setMessage: setMessage, rag: rag});
                 setQuery('');
             }}
             >
@@ -47,7 +47,7 @@ async function onSend(props){
         const queryRes = await axios.post('http://127.0.0.1:8000/chatResponse', {
             currentQuery: props.message,
             sessionId: props.sesId,
-            webSearch: props.search
+            rag: props.rag
         });
         props.setMessage([...props.messages, {role: 'assistant', message: queryRes.data.chatResponse}]);
     }

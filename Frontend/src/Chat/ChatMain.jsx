@@ -4,21 +4,26 @@ import Cookies from 'js-cookie';
 import ChatInput from './input';
 import MessageDisplay from './messageDisplay';
 import Search from '../webSearch/search';
+import UploadButton from '../fileUpload/uploadButton';
 
 let ran = false;
 export default function ChatMain(){
 
   const [messages, setMessages] = useState([]);
-  const [webSearch, setWebSearch] = useState(false);
+  const [rag, setRag] = useState(false);
+  const [uploadSessionId, setUploadSessionId] = useState(null);
+  console.log(rag);
 
     useEffect(()=>{
-    let sessionId;
+    // let sessionId;
     if (!ran){
       ran = true;
       const fetchSessionId = async () => {
+        // let sessionId;
         try{
-          sessionId = await getSessionId();
-          Cookies.set('sessionId', sessionId)
+          const sessionId = await getSessionId();
+          Cookies.set('sessionId', sessionId);
+          setUploadSessionId(sessionId);
         }catch(error){
           console.error('Error generating session ID:', error);
         }
@@ -29,14 +34,15 @@ export default function ChatMain(){
 
   return (
     <>
-    <Search webSearch={webSearch} setWebSearch={setWebSearch}/>
+    <UploadButton sessionId={uploadSessionId}/>
+    <Search rag={rag} setRag={setRag}/>
     <MessageDisplay
     messages={messages}
     />
     <ChatInput
     setMessage={setMessages}
     allMessages={messages}
-    webSearch={webSearch}
+    rag={rag}
     />
     </>
   )

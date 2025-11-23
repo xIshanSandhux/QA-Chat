@@ -4,9 +4,10 @@ import { IoIosSend } from "react-icons/io";
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
-export default function ChatInput({setMessage, allMessages}){
+export default function ChatInput({setMessage, allMessages, rag}){
     const [query, setQuery] = useState("")
     const sessionId = Cookies.get('sessionId');
+    
     return (
         <div className="chat-input">
             <form
@@ -16,7 +17,7 @@ export default function ChatInput({setMessage, allMessages}){
                 e.preventDefault();
                 const newMessages = [...allMessages, {role: 'user', message: query}];
                 setMessage(newMessages);
-                onSend({message: query, sesId: sessionId, messages: newMessages, setMessage: setMessage});
+                onSend({message: query, sesId: sessionId, messages: newMessages, setMessage: setMessage, rag: rag});
                 setQuery('');
             }}
             >
@@ -42,11 +43,11 @@ export default function ChatInput({setMessage, allMessages}){
 }
 
 async function onSend(props){
-
     try {
         const queryRes = await axios.post('http://127.0.0.1:8000/chatResponse', {
             currentQuery: props.message,
-            sessionId: props.sesId
+            sessionId: props.sesId,
+            rag: props.rag
         });
         props.setMessage([...props.messages, {role: 'assistant', message: queryRes.data.chatResponse}]);
     }

@@ -1,11 +1,17 @@
 import { useRef, useEffect } from 'react';
 import './uploadFile.css';
 import axios from 'axios';
+// import Cookies from 'js-cookie';
 
-export default function UploadButton(){
+export default function UploadButton({sessionId}){
     const fileInputRef = useRef(null);
-
+    // const sessionId = Cookies.get('sessionId');
+    // console.log(sessionId);
+    console.log('sessionId', sessionId);
+    // useEffect(()=>{
     const handleFileUpload = async (e) => {
+        console.log('handleFileUpload');
+        console.log(e);
         const files = e.target.files;
         if (files.length===0 || !files) return;
         console.log(e.target);
@@ -13,6 +19,7 @@ export default function UploadButton(){
         const curFile = files[0];
         const formData = new FormData();
         formData.append('pdfFile', curFile);
+        formData.append('sessionId', sessionId);
 
         
         try{
@@ -20,6 +27,8 @@ export default function UploadButton(){
             console.log(uploading);
         }catch(error){
             console.error('Error uploading PDF:', error);
+        }finally{
+            fileInputRef.current.value = '';
         }
 
         console.log(curFile.name);

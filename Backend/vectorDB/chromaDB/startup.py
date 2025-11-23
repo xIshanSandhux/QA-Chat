@@ -1,8 +1,6 @@
 # initialization for chromaDB
 
 import chromadb 
-import asyncio
-
 
 client = None  
 collection = None

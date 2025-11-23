@@ -30,23 +30,13 @@ async def add_chunks(sessionId: str, chunks: List[str]):
     return await collection().count()
 
 async def getQueryChunks(sessionId: str, query: str):
-    print("Getting query chunks")
-    print("Session ID: ", sessionId)
-    print("Query: ", query)
     queryEmbedding = await embedDoc([query])
-    # print("Query embedding")
-    # print(queryEmbedding)
     relChunks = await collection().query(
         query_embeddings=queryEmbedding,
         n_results=5,
         where={"sessionId": sessionId},
         include=["documents", "metadatas"]
     )
-    print("--------------------------------REL CHUNKS--------------------------------")
-    print(relChunks)
-    # chunks = await collection().get(where={"sessionId": sessionId})
-    print("--------------------------------REL CHUNKS--------------------------------")
-    # print(ch/unks)
     return relChunks
 
 

@@ -17,13 +17,9 @@ async def chatResponse(query: userQuery):
             raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Session ID is required.")
         
         if query.rag:
-            print("RAG is enabled")
-            # call the web search function
-            # nedd to add the functionality
-            # prolly dont need the else statement
+            chatResponse = await generateResponse(query.sessionId, query.currentQuery, query.rag)
         else:
-            print("Web Search is disabled")
-        chatResponse = await generateResponse(query.sessionId, query.currentQuery, query.rag)
+            chatResponse = await generateResponse(query.sessionId, query.currentQuery)
         return {"chatResponse": chatResponse}
     except Exception as e:
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))

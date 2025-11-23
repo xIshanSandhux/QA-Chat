@@ -19,10 +19,8 @@ from fastapi import HTTPException, status
 
 # adding to chat history
 async def addToChat(session_id: str, role: str, text: str):
-    print("Hello")
     try:
         chat_history = await get_redis(session_id)
-        print(chat_history)
         current_chat = {"role": role, "parts": [{"text": text}]}
         if chat_history is None:
             await set_redis(session_id, json.dumps([current_chat]))

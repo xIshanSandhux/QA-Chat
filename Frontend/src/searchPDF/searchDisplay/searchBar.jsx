@@ -53,7 +53,10 @@ export default function SearchBar(){
                 </button>
             </form>
 
-            <h3>PDF Search Results: ---</h3>
+            {/* will be changing this to the actual number of results returned from the backend */}
+            {/* only to be displayed when there are results returned from the backend */}
+            {/* need to show loading spinner when the search button is clicked and the results are being fetched from the backend */}
+            <h3>PDF Search Results: {dummyResults.length>0? dummyResults.length : "---"}</h3>
 
             <div
             className="search-results-container"

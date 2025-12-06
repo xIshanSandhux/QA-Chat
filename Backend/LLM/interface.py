@@ -5,5 +5,9 @@ class LLMInterface(ABC):
 
 
     @abstractmethod
-    def generate_response(self, prompt: str) -> str:
+    async def generate_response(self, prompt: str) -> str:
         pass
+
+
+    def stream_response(self, prompt: str):
+        raise NotImplementedError("Stream response is not implemented")

@@ -7,6 +7,8 @@ from api.redis.initialization import start_redis, shutdown_redis
 from vectorDB.chromaDB.startup import start_chromadb
 from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
+from LLM.LLMConfig import get_LLMConfig
+
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -18,6 +20,7 @@ async def lifespan(app: FastAPI):
     await shutdown_redis()
 
 app = FastAPI(title="QA Chat API", lifespan=lifespan)
+print(get_LLMConfig())
 app.include_router(idroute)
 app.include_router(chatroute)
 app.include_router(fileUpload)

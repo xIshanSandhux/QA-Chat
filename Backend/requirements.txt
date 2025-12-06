@@ -11,3 +11,4 @@ ddgs
 aiohttp[speedups]
 sentence-transformers
 chromadb
+groq

@@ -7,12 +7,16 @@ from api.redis.initialization import start_redis, shutdown_redis
 from vectorDB.chromaDB.startup import start_chromadb
 from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
+from LLM.factory import LLMProviderFactory
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     # redis for the chat history
     await start_redis()
     await start_chromadb()
+    # LLM provider initialization
+    provider = LLMProviderFactory()
+    print(provider)
     yield
     
     await shutdown_redis()

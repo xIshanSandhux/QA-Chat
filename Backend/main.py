@@ -8,6 +8,7 @@ from vectorDB.chromaDB.startup import start_chromadb
 from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 from LLM.factory import LLMProviderFactory
+from RAG.embedding.embed import initializeEmbedModel
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -16,6 +17,7 @@ async def lifespan(app: FastAPI):
     await start_chromadb()
     # LLM provider initialization
     provider = LLMProviderFactory()
+    initializeEmbedModel()
     print(provider)
     yield
     

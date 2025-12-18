@@ -12,14 +12,14 @@ def createID(length: int):
     ids = [str(uuid.uuid4()) for _ in range(length)]
     return ids
 
-def metadata(sessionId: str, length: int):
-    sessionIds = [{"sessionId": sessionId} for _ in range(length)]
-    return sessionIds
+def metadata(sessionId: str, length: int, pageNumber: int):
+    chunkMetadata = [{"sessionId": sessionId,"pageNumber": pageNumber} for _ in range(length)]
+    return chunkMetadata
 
 
-async def add_chunks(sessionId: str, chunks: List[str]):
+async def add_chunks(sessionId: str, chunks: List[str], pageNumber: int):
     chunk_ids= createID(len(chunks))
-    chunk_metadata = metadata(sessionId, len(chunks))
+    chunk_metadata = metadata(sessionId, len(chunks),pageNumber)
     chunk_embeddings = await embedDoc(chunks)
     await collection().add(
         ids=chunk_ids,
@@ -27,7 +27,7 @@ async def add_chunks(sessionId: str, chunks: List[str]):
         documents=chunks,
         metadatas=chunk_metadata
     )
-    return await collection().count()
+    # return await collection().count()
 
 async def getQueryChunks(sessionId: str, query: str):
     queryEmbedding = await embedDoc([query])

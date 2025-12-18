@@ -6,8 +6,8 @@ function App() {
 
   return (
     <>
-      <ChatMain />
-      {/* <SearchMain /> */}
+      {/* <ChatMain /> */}
+      <SearchMain />
     </>
   )
 }

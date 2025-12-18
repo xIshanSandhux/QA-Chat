@@ -27,6 +27,8 @@ async def add_chunks(sessionId: str, chunks: List[str], pageNumber: int):
         documents=chunks,
         metadatas=chunk_metadata
     )
+    added_check = await collection().peek()
+    print(added_check)
     # return await collection().count()
 
 async def getQueryChunks(sessionId: str, query: str):

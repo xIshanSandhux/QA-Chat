@@ -2,7 +2,7 @@
 
 
 from .startup import get_collection as collection
-from embedding.embed import embedDoc
+from RAG.embedding.embed import embedDoc
 from typing import List
 import uuid
 

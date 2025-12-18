@@ -1,4 +1,6 @@
 .env
 venv
 CoverLetter.pdf
+sample_two_page.pdf
+Sample.pdf
 __pycache__/

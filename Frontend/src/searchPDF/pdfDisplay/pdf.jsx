@@ -72,5 +72,5 @@ async function pdfUpload(fileFormData){
     }catch(error){
         console.error('Error uploading PDF:', error);
     }
-    return response.data.message;
+    return response.status;
 }

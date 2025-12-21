@@ -6,11 +6,16 @@ import asyncio
 
 
 router = APIRouter()
-async def chunkTasks(chunks: List[str],pageNumber: int, sessionId: str):
-        await add_chunks(sessionId, chunks,pageNumber)
+async def chunkTasks(chunks: List[str],pageNumber: int, sessionId: str, fileName: str):
+        await add_chunks(sessionId, chunks,pageNumber, fileName)
 
 @router.post("/pdfUpload", status_code=status.HTTP_201_CREATED)
 async def pdfUpload(pdfFile: Annotated[UploadFile, File()],sessionId: Annotated[str, Form()]):
+    fileName = pdfFile.filename
+    # print(fileName)
+    if pdfFile.content_type != 'application/pdf':
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="File is not a PDF")
+
     file_content = await pdfFile.read()
     fileContent = readDoc(file_content)
     chunks = {}
@@ -19,7 +24,7 @@ async def pdfUpload(pdfFile: Annotated[UploadFile, File()],sessionId: Annotated[
 
     # num_chunks = await add_chunks(sessionId, chunks)
     try:
-        tasks = [chunkTasks(chunk, pageNumber, sessionId) for pageNumber, chunk in chunks.items()]
+        tasks = [chunkTasks(chunk, pageNumber, sessionId, fileName) for pageNumber, chunk in chunks.items()]
         await asyncio.gather(*tasks)
         
     except Exception as e:

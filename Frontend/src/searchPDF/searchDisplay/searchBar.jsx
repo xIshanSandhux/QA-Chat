@@ -62,7 +62,7 @@ export default function SearchBar(){
             className="search-results-container"
             >
                 {dummyResults.map((result, index)=>{
-                    console.log(result);
+                    // console.log(result);
                   return (
                   <div 
                   className="search-result-item"

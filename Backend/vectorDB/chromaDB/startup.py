@@ -27,3 +27,9 @@ def get_collection():
     if not collection:
         raise Exception("Collection not created")
     return collection
+
+async def shutdown_chromadb():
+    global client
+    global collection
+    await client.delete_collection(name='mvp_collection')
+    print("ChromaDB shut down successfully (deleted collection)")

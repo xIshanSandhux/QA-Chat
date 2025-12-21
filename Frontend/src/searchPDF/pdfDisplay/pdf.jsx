@@ -1,6 +1,7 @@
 import './pdf.css';
 import axios from 'axios';
 import { useRef, useState } from 'react';
+import Cookies from 'js-cookie';
 import UploadButton from '../../fileUpload/uploadButton';
 
 export default function PdfDisplay(){
@@ -72,5 +73,6 @@ async function pdfUpload(fileFormData){
     }catch(error){
         console.error('Error uploading PDF:', error);
     }
+    Cookies.set('curFile', response.data.curFile);
     return response.status;
 }

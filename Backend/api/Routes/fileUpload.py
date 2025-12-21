@@ -29,7 +29,7 @@ async def pdfUpload(pdfFile: Annotated[UploadFile, File()],sessionId: Annotated[
         
     except Exception as e:
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
-    return {"message": "Chunks added to the database"}
+    return {"message": "Chunks added to the database", "curFile": fileName}
 
 
 

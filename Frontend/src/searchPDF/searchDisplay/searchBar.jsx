@@ -35,7 +35,7 @@ export default function SearchBar(){
             onSubmit={async (e)=>{
                 e.preventDefault();
                 console.log(search);
-                const results = await searchQuery(search, sessionId, fileName);
+                const results = searchQuery({query: search, sessionId: "test-1234", fileName:curFile});
                 console.log(results);
                 // console.log(e.target.files[0].name);
                 setSearch("");
@@ -88,13 +88,14 @@ export default function SearchBar(){
 }
 
 
-async function searchQuery(query, sessionId, fileName){
+async function searchQuery(props){
     let res;
+    console.log(props.query, props.sessionId, props.fileName);
     try{
-        res = await axios.post('http://127.0.0.1:8000/searchQuery', {
-            query: query,
-            sessionId: sessionId,
-            fileName: fileName
+        res = await axios.post('http://127.0.0.1:8000/searchpdf', {
+            query: props.query,
+            sessionId: props.sessionId,
+            fileName: props.fileName
         });
     }catch(error){
         console.error('Error searching query:', error);

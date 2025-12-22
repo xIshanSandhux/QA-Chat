@@ -38,5 +38,6 @@ async def searchpdf(searchQuery: searchPDFQuery):
         
         rewrite = await rewriteQuery(searchQuery.query)
         searchresults = await searchPDF(rewrite, searchQuery.sessionId, searchQuery.fileName)
+        return {"searchresults": searchresults}
     except Exception as e:
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))

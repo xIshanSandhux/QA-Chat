@@ -35,7 +35,7 @@ export default function SearchBar(){
             onSubmit={async (e)=>{
                 e.preventDefault();
                 console.log(search);
-                const results = searchQuery({query: search, sessionId: "test-1234", fileName:curFile});
+                const results = await searchQuery({query: search, sessionId: "test-1234", fileName:curFile});
                 console.log(results);
                 // console.log(e.target.files[0].name);
                 setSearch("");
@@ -100,7 +100,8 @@ async function searchQuery(props){
     }catch(error){
         console.error('Error searching query:', error);
     }finally{
-        return res.data.results;
+        console.log(res.data.searchresults);
+        return res.data.searchresults;
     }
 
 }

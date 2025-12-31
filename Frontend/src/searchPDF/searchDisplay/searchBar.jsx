@@ -1,9 +1,14 @@
 import './searchBar.css';
 import {useState} from 'react';
 import { IoIosSearch } from "react-icons/io";
+import Cookies from 'js-cookie';
+import axios from 'axios';
 export default function SearchBar(){
 
     const [search, setSearch] = useState("");
+    const searchResult = useState([]);
+    const curFile = Cookies.get('curFile');
+    console.log(curFile);
     // const [selected, setSelected] = useState(null);
     // console.log(search);
     const dummyResults = [
@@ -27,9 +32,12 @@ export default function SearchBar(){
             <form 
             name="search-bar-form"
             className="search-bar-main-container"
-            onSubmit={(e)=>{
+            onSubmit={async (e)=>{
                 e.preventDefault();
                 console.log(search);
+                const results = await searchQuery({query: search, sessionId: "test-1234", fileName:curFile});
+                console.log(results);
+                // console.log(e.target.files[0].name);
                 setSearch("");
                 // will be sending the query to the backend
                 // need to get the backend working for it but will be doing console log until then
@@ -77,4 +85,23 @@ export default function SearchBar(){
             </div>
         </div>
     )
+}
+
+
+async function searchQuery(props){
+    let res;
+    console.log(props.query, props.sessionId, props.fileName);
+    try{
+        res = await axios.post('http://127.0.0.1:8000/searchpdf', {
+            query: props.query,
+            sessionId: props.sessionId,
+            fileName: props.fileName
+        });
+    }catch(error){
+        console.error('Error searching query:', error);
+    }finally{
+        console.log(res.data.searchresults);
+        return res.data.searchresults;
+    }
+
 }

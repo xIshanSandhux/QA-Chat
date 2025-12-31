@@ -7,7 +7,7 @@ from typing import List
 model = None
 
 # embedding the chunks
-async def embedDoc(chunks: List[str]):
+def embedDoc(chunks: List[str]):
     global model
     if model is None:
         initializeEmbedModel()
@@ -15,7 +15,7 @@ async def embedDoc(chunks: List[str]):
     return embeddings
 
 # embedding the query
-async def embedQuery(query: str):
+def embedQuery(query: str):
     global model
     if model is None:
         initializeEmbedModel()

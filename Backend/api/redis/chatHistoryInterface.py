@@ -1,0 +1,11 @@
+from abc import ABC, abstractmethod
+
+class chatHistoryInterface(ABC):
+    @abstractmethod
+    async def addChat(session_id: str, role: str, query: str):
+       pass
+
+    @abstractmethod
+    async def getChatHistory(session_id: str):
+        pass
+ 

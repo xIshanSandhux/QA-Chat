@@ -1,6 +1,6 @@
 from math import exp
 from .chatHistoryInterface import chatHistoryInterface
-from .initialization import setRedisChatList
+from .initialization import setRedisChatList,getFullChat
 import json
 class groqChat(chatHistoryInterface):
 
@@ -10,3 +10,13 @@ class groqChat(chatHistoryInterface):
             await setRedisChatList(session_id,json.dumps(current))
         except Exception as e:
             raise Exception(str(e))
+        
+    async def getChatHistory(self, session_id: str):
+            try:
+                chat = await getFullChat(session_id)
+                if chat is None:
+                    raise
+                fullchat = [json.loads(x) for x in chat]
+                return fullchat
+            except Exception as e:
+                raise Exception(str(e))

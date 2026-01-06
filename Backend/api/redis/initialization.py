@@ -73,4 +73,23 @@ async def setRedisChatList(session_id: str, query: str) -> None:
         print("Missing redis client while running the set command")
     except redis.ResponseError:
         print("Please check the list push command syntax and argument") 
+
+async def getFullChat(session_id: str):
+    global chat_redis
+
+    try:
+        if not chat_redis:
+            raise redis.ConnectionError
+        
+        history = await chat_redis.lrange(session_id,0,-1)
+        if len(history)==0:
+            raise redis.ResponseError
+        return history
+    except redis.ResponseError:
+        print("please check the command and the chat not able to get full chat history")
+    except redis.ConnectionError:
+        print("Unable to process the chat history command due to connection Error")
+
+    
+        
  

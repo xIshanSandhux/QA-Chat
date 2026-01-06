@@ -1,6 +1,5 @@
 import redis.asyncio as redis
 from fastapi import HTTPException
-import json
 import asyncio
 chat_redis = None
 
@@ -21,7 +20,7 @@ async def shutdown_redis():
     if not chat_redis:
         return
     try:
-        chat_redis.close()
+        await chat_redis.close()
     except redis.ConnectionError:
         print("Failed to shutdown Redis due to connection issues")
     except redis.TimeoutError:
@@ -52,5 +51,26 @@ async def set_redis(session_id: str, query: str):
     except redis.ResponseError:
         print("Please check the set command syntax and argument") 
    
+async def getChatLen(session_id: str)-> int |None:
+    global chat_redis
+    try:
+        if not chat_redis:
+            raise redis.ConnectionError
+        return await chat_redis.llen(session_id)
+    except redis.ConnectionError:
+        print("Check Redis client, not able to get the client for chat length")
 
-
+async def setRedisChatList(session_id: str, query: str) -> None:
+    global chat_redis
+    try:
+        if not chat_redis:
+            raise redis.ConnectionError
+        chatLen = await getChatLen(session_id)
+        add = chat_redis.rpush(session_id,query)
+        if chatLen == add:
+            raise redis.ResponseError
+    except redis.ConnectionError:
+        print("Missing redis client while running the set command")
+    except redis.ResponseError:
+        print("Please check the list push command syntax and argument") 
+ 

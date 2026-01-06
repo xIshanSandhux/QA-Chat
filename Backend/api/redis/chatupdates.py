@@ -36,3 +36,7 @@ async def getChatHistory(session_id: str):
     if chat_history is None:
         return []
     return json.loads(chat_history)
+
+# async def getChatLength(session_id: str) -> int:
+
+

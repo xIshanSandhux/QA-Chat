@@ -1,9 +1,9 @@
 from abc import ABC, abstractmethod
-
+from typing import List
 class LLMInterface(ABC):
 
     @abstractmethod
-    async def generate_response(self, prompt: str) -> str:
+    async def generate_response(self, prompt: str, history: List[dict[str,str]]) -> str:
         pass
 
     @abstractmethod

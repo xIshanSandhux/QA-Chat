@@ -1,35 +1,33 @@
 from dotenv import load_dotenv
 import os
 import json
-from api.redis.chatupdates import addToChat, getChatHistory
+from Infra.redis.groqChatHistory import groqChat
 from vectorDB.chromaDB.chroma import getQueryChunks
-from LLM.factory import LLMProviderFactory
+from src.services.LLM.factory import LLMProviderFactory
 
 provider = LLMProviderFactory()
 
 # will be using the documents parameter for giving the relevant chunks
 async def generateResponse(session_id, query: str):
     
-    # await addToChat(session_id, "user", query)
-    # chat_history = await getChatHistory(session_id)
-    # if rag:
-    #     system_prompt = open("api/logic/sysprompt.md", "r").read()
-    #     relChunks = await getQueryChunks(session_id, query)
-    #     chunks = json.dumps(relChunks["documents"])
-    #     system_prompt = system_prompt + "\n\n" + "these are the relevant chunks from the document: " + chunks
-    #     response = client.models.generate_content(
-    #         model="gemini-2.5-flash",
-    #         config=types.GenerateContentConfig(
-    #             system_instruction=system_prompt),
-    #             contents=chat_history
-    #         )
-    # else:
-    #     response = client.models.generate_content(
-    #         model="gemini-2.5-flash", contents=chat_history
-    #     )
-    # await addToChat(session_id, "model", response.text)
-    # return response.text
+    try:
+        # re-writing query for better context
+        rewrite = await provider.query_rewrite(query)
+        # adding current user query to the redis history
+        await groqChat().addChat(session_id,'user',query)
+        # Getting the chat history for the user
+        history = await groqChat().getChatHistory(session_id)
+        # appending to the current history for performance
+        history.append({"role":"user","content":query})
+        # generating response from the LLM
+        res = await provider.generate_response(history)
 
-
-    response = await provider.generate_response(query)
-    return response
+        return res
+    except Exception as e:
+        print(f"Exception while generating a response: {str(e)}")
+    finally:
+        try:
+            await groqChat().addChat(session_id,"user",query)
+            await groqChat().addChat(session_id,"assistant",res)
+        except Exception as e:
+            print(f"Exception occurred while adding the user query and assistant response to redis")

@@ -1,5 +1,6 @@
 from ..interface import LLMInterface
 from fastapi import HTTPException
+from typing import List 
 from groq import AsyncGroq
 
 class GroqProvider(LLMInterface):
@@ -8,17 +9,12 @@ class GroqProvider(LLMInterface):
         self.client = AsyncGroq(api_key=key)
         self.model = model
 
-    async def generate_response(self, prompt: str) -> str:
+    async def generate_response(self, history: List[dict[str,str]]) -> str:
         try:
             response = await self.client.chat.completions.create(
                 model=self.model,
-                messages=[
-                    {
-                        "role": "user",
-                        "content": prompt
-                    }
-                ]
-            )
+                messages=history
+                )
             return response.choices[0].message.content
         except Exception as e:
             raise HTTPException(status_code=500, detail=str(e))

@@ -1,6 +1,6 @@
 import redis.asyncio as redis
 from fastapi import HTTPException
-import asyncio
+# import asyncio
 chat_redis = None
 
 def start_redis():

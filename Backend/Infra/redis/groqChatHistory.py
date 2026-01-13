@@ -1,6 +1,6 @@
 from math import exp
 from .chatHistoryInterface import chatHistoryInterface
-from .initialization import setRedisChatList,getFullChat
+from .initialization import setRedisChatList,getFullChat, getChatLen
 import json
 class groqChat(chatHistoryInterface):
 
@@ -20,3 +20,11 @@ class groqChat(chatHistoryInterface):
                 return fullchat
             except Exception as e:
                 raise Exception(str(e))
+    
+    async def getChatLength(self, session_id: str):
+        try:
+            length = await getChatLen(session_id)
+            return length
+        except Exception as e:
+            print("Error getting the chat length")
+            print(f"Error: {str(e)}")

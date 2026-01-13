@@ -13,8 +13,6 @@ async def generateResponse(session_id, query: str):
     try:
         # re-writing query for better context
         rewrite = await provider.query_rewrite(query)
-        # adding current user query to the redis history
-        await groqChat().addChat(session_id,'user',query)
         # Getting the chat history for the user
         history = await groqChat().getChatHistory(session_id)
         # appending to the current history for performance

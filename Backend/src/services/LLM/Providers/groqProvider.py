@@ -22,7 +22,7 @@ class GroqProvider(LLMInterface):
 
     async def query_rewrite(self, query: str) -> str:
         try:
-            system_prompt = open("LLM/SystemPrompts/queryRewrite.md", "r").read()
+            system_prompt = open("src/services/LLM/SystemPrompts/queryRewrite.md", "r").read()
             response = await self.client.chat.completions.create(
                 model=self.model,
                 messages=[

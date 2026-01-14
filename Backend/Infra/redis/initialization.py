@@ -3,11 +3,11 @@ from fastapi import HTTPException
 # import asyncio
 chat_redis = None
 
-def start_redis():
+async def start_redis():
     global chat_redis
     try:
-        chat_redis = redis.Redis(host='localhost', port=6379, decode_responses=True)
-        if not chat_redis.ping():
+        chat_redis = await redis.Redis(host='localhost', port=6379, decode_responses=True)
+        if not await chat_redis.ping():
             raise redis.ConnectionError    
     except redis.ConnectionError:
         raise HTTPException(status_code=500, detail="Failed to connect to Redis")
@@ -66,7 +66,7 @@ async def setRedisChatList(session_id: str, query: str) -> None:
         if not chat_redis:
             raise redis.ConnectionError
         chatLen = await getChatLen(session_id)
-        add = chat_redis.rpush(session_id,query)
+        add = await chat_redis.rpush(session_id,query)
         if chatLen == add:
             raise redis.ResponseError
     except redis.ConnectionError:

@@ -8,7 +8,7 @@ from src.services.LLM.factory import LLMProviderFactory
 provider = LLMProviderFactory()
 
 # will be using the documents parameter for giving the relevant chunks
-async def generateResponse(session_id, query: str):
+async def generateResponse(session_id: str, query: str):
     
     try:
         # re-writing query for better context
